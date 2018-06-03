@@ -28,7 +28,8 @@ __VALID_DOMAINS = ["www.washingtonpost.com",
                    "www.usatoday.com",
                    "www.azcentral.com",
                    "sportsday.dallasnews.com",
-                   "www.dallasnews.com"]
+                   "www.dallasnews.com"
+                   ]
 
 
 def main():
@@ -70,11 +71,11 @@ def main():
         wsj = Publication(name='WSJ')
 
         wsj_args = [
-                    {
+                        {
                         'parent_div': 'div.wsj-article-caption',
                         'caption_span': 'span.wsj-article-caption-content',
                         'credit_span': 'span.wsj-article-credit'
-                    }
+                        }
                    ]
 
         wsj_inp_urls = get_workbook_urls(workbook='articles.xlsx',
@@ -164,7 +165,7 @@ def main():
                 print_article(article)
                 continue
 
-            if os.path.exists("cookies.pkl"):
+            if os.path.isfile("cookies.pkl"):
                 cookies = pickle.load(open("cookies.pkl", "rb"))
                 for cookie in cookies:
                     publication.driver.add_cookie(cookie)
@@ -207,11 +208,11 @@ def main():
     wsj = Publication(name='WSJ')
 
     wsj_args = [
-                {
+                    {
                     'parent_div': 'div.wsj-article-caption',
                     'caption_span': 'span.wsj-article-caption-content',
                     'credit_span': 'span.wsj-article-credit'
-                }
+                    }
                ]
 
     wsj_inp_urls = get_workbook_urls(workbook='articles.xlsx',
