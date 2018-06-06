@@ -1,4 +1,4 @@
-# publication-twitter-scraper
+# article-image-caption-scraper
 
 ## A web scraper for Tweeted news articles and their image captions
 
