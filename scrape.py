@@ -1,7 +1,11 @@
 import pickle
-from typing import List
+from typing import List, Dict
 
-from utility import *
+from selenium.common.exceptions import TimeoutException
+
+from article import Article
+from publication import Publication
+from utility import write_output, print_article, get_workbook_urls, get_domain
 
 __VALID_DOMAINS = ["www.washingtonpost.com",
                    "www.wsj.com",

@@ -4,7 +4,8 @@ from urllib.parse import urlparse
 
 from openpyxl import load_workbook, Workbook
 
-from publication import *
+from article import Article
+from publication import Publication
 
 
 def write_output(publication: Publication,
