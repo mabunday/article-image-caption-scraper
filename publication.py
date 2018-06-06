@@ -34,7 +34,7 @@ class Publication:
         self.__chrome_options = Options()
         # ADD PATH TO DRIVER HERE
         self.__driver = webdriver.Chrome(
-            "/YOUR_PATH_TO/chromedriver", chrome_options=self.__chrome_options)
+            "/Users/mabunday/research/chromedriver", chrome_options=self.__chrome_options)
         self.__driver.implicitly_wait(implicit_wait)
         self.__articles = []
         # self.__input_urls = []
