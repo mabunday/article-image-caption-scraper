@@ -96,13 +96,16 @@
 * Generally speaking, captions are formatted in 3 ways:
     1. With the caption/credit as children of a parent container
     and the caption/credit residing on the same depth. Example:
+
         ```
         PARENT_CONTAINER
         ↳ CHILD_CAPTION
         ↳ CHILD_CREDIT
         ```
+
     2. With the caption/credit formatted in a single text string.
         Examples:
+
         ```
         Some example caption (Some example credit)
         ```
@@ -133,5 +136,4 @@
 
 
 
-    Extracting captions from galleries/slideshows is currently hit
-    or miss depending on their structure and whether their content is dynamically generated. This work can be expanded in future versions.
+    Extracting captions from galleries/slideshows is inconsistent depending on page structure and whether content is dynamically generated. This functionality is a WIP.
