@@ -68,7 +68,9 @@ class Publication:
         return self.__name
 
     def quit(self):
-        print("Closing {} driver...".format(self.__name))
+        print("Closing {publication} driver...".
+              format(publication=self.__name)
+              )
         self.__driver.quit()
 
     @property

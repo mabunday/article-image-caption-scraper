@@ -53,9 +53,9 @@ def write_output(publication: Publication,
 
     """
     if os.path.isfile(output_workbook):
-        print("Opening existing file {}".format(output_workbook))
+        print("Opening existing file {wb}".format(wb=output_workbook))
     else:
-        print("Creating new file {}".format(output_workbook))
+        print("Creating new file {wb}".format(wb=output_workbook))
         wb = Workbook()
         wb.remove(wb.active)
         wb.create_sheet(output_sheet)
@@ -73,8 +73,9 @@ def write_output(publication: Publication,
     out_wb = load_workbook(filename=output_workbook)
     out_sheet = out_wb[output_sheet]
     articles = publication.articles
-    print("Writing {} articles to {}:{}...".
-          format(len(articles), output_workbook, output_sheet))
+    print("Writing {num} articles to {wb}:{sheet}...".
+          format(num=len(articles), wb=output_workbook, sheet=output_sheet)
+          )
 
     for article in articles:
         a = article.as_dictionary
@@ -97,7 +98,7 @@ def write_output(publication: Publication,
                            column=8 + image_index * 2,
                            value=image['credit']
                            )
-    print("Closing and saving {}...\n".format(output_workbook))
+    print("Closing and saving {wb}...\n".format(wb=output_workbook))
     out_wb.save(output_workbook)
 
 
@@ -165,7 +166,9 @@ def get_workbook_urls(workbook: str,
     try:
         wb = load_workbook(filename=workbook)
     except FileNotFoundError:
-        print("FileNotFoundError: no such file {}".format(workbook))
+        print("FileNotFoundError: no such file {filename}".
+              format(filename=workbook)
+              )
         return []
     sheet = wb[wb_sheet]
     cells = [sheet.cell(row=row, column=col).value
@@ -176,13 +179,17 @@ def get_workbook_urls(workbook: str,
         url_index = cell.find("https://t.co/")
         if url_index == -1:
             urls.append("NO_URL")
-            print("No URL found at index {}".format(row_start + cell_index))
+            print("No URL found at index {num}".
+                  format(num=row_start + cell_index)
+                  )
             continue
 
         url = cell[url_index:url_index + 23]
         if not url[13:23].isalnum():
             urls.append("INVALID_URL")
-            print("Invalid url found at index {}".format(row_start + cell_index))
+            print("Invalid url found at index {num}".
+                  format(num=row_start + cell_index)
+                  )
         else:
             urls.append(url)
 

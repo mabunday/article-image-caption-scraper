@@ -98,8 +98,11 @@ def main():
         """
         urls = input_urls
         for url_index, url in enumerate(urls):
-            print("Processing {} article {} of {}...".
-                  format(publication.name, url_index, len(urls))
+            print("Processing {publication} article {current} of {total}...".
+                  format(publication=publication.name,
+                         current=url_index,
+                         total=len(urls)
+                         )
                   )
             messages = []
             sheet_index = url_index + start_index - 1
@@ -145,7 +148,7 @@ def main():
                     continue
 
                 redirect_url = tweet[link_index:link_index+23]
-                print("Going to twitter redirect... -> {}".format(redirect_url))
+                print("Going to twitter redirect... -> {url}".format(url=redirect_url))
                 messages.append("REDIRECTED")
                 try:
                     publication.url = redirect_url
@@ -161,7 +164,7 @@ def main():
                     continue
 
             if domain not in __VALID_DOMAINS:
-                print("INVALID_DOMAIN: Skipping {}".format(domain))
+                print("INVALID_DOMAIN: Skipping {domain}".format(domain=domain))
                 messages.append("INVALID_DOMAIN")
                 article = Article(url=url,
                                   index=sheet_index,
