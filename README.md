@@ -1,6 +1,6 @@
-# article-image-caption-scraper
+# twitter-news-scraper
 
-## A web scraper for Tweeted news articles and their image captions
+## A web scraper for Tweeted news articles
 
 ### USAGE
 
