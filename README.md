@@ -5,9 +5,9 @@
 
 ### v1.2 Changelog
 * Updated to Python 3.7.0
-* Now uses Dataclasses
-* Now takes input data as CSV (handle, tweet)
-* Now outputs data as JSON 
+* Refactored to use Dataclasses and Dataframes
+* Now takes input Twitter data as CSV (handle, tweet)
+* Now outputs scraped data as JSON 
 
 ### Requirements
 1. Download ChromeDriver from [http://chromedriver.chromium.org/downloads](http://chromedriver.chromium.org/downloads)
@@ -19,9 +19,9 @@ Run program with `python3 scrape.py`
 
 ### Examples
 
-Scraping image captions from WSJ and WAPO articles. 
+Scraping image captions from WSJ and WAPO articles 
 
-##### Define Publication instances in _scrape.py_.
+##### Define Publication instances in _scrape.py_
     ```python
     
     tweets = read_csv('../example_data.csv')
@@ -137,5 +137,5 @@ Scraping image captions from WSJ and WAPO articles.
             }
         ]
     }
-    
+    ...
     ```
