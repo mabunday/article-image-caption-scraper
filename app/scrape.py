@@ -112,16 +112,17 @@ class CustomDriver(webdriver.Chrome):
         """
 
         if not pub.logged_in:
-            if pub.name in pub.cookies:
-                print('Loading saved {} cookies'.format(pub.name))
-                for cookie in pub.cookies[pub.name]:
-                    self.add_cookie(cookie)
-                pub.logged_in = True
+            if isinstance(pub.cookies, dict):
+                if pub.name in pub.cookies:
+                    print('Loading saved {} cookies'.format(pub.name))
+                    for cookie in pub.cookies[pub.name]:
+                        self.add_cookie(cookie)
+                    pub.logged_in = True
 
-            else:
-                input('Press Enter to begin after you have logged in...')
-                pub.cookies[pub.name] = self.get_cookies()
-                pub.logged_in = True
+                else:
+                    input('Press Enter to begin after you have logged in...')
+                    pub.cookies[pub.name] = self.get_cookies()
+                    pub.logged_in = True
 
     def _get_images(
             self,
@@ -242,9 +243,10 @@ def main() -> None:
     driver = CustomDriver(_driver_path)
 
     tweets = read_csv('../example_data.csv')
+    urls = extract_tweeted_urls(tweets)
 
     # WALL STREET JOURNAL
-    wsj_urls = extract_tweeted_urls(tweets).loc[0:2]
+    wsj_urls = urls.loc[0:2]
 
     # Captures image captions of the form
     # PARENT_CONTAINER
@@ -264,7 +266,7 @@ def main() -> None:
     print_stats(wsj)
 
     # WASHINGTON POST
-    wapo_urls = extract_tweeted_urls(tweets).loc[163:168]
+    wapo_urls = urls.loc[163:168]
 
     # Captures image captions of the form
     # "example caption (example credit)"

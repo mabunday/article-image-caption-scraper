@@ -24,9 +24,10 @@ Scraping image captions from WSJ and WAPO articles
 ##### Define Publication instances in _scrape.py_
 ```python
 tweets = read_csv('../example_data.csv')
+urls = extract_tweeted_urls(tweets)
 
 # WALL STREET JOURNAL
-wsj_urls = extract_tweeted_urls(tweets).loc[0:2]
+wsj_urls = urls.loc[0:2]
 
 # Captures image captions of the form
 # PARENT_CONTAINER
@@ -46,7 +47,7 @@ wsj.write('output.json')  # write output data
 print_stats(wsj)
 
 # WASHINGTON POST
- wapo_urls = extract_tweeted_urls(tweets).loc[163:168]
+ wapo_urls = urls.loc[163:168]
 
 # Captures image captions of the form
 # "example caption (example credit)"
