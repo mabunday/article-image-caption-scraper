@@ -1,139 +1,141 @@
 # twitter-news-scraper
+[![made-with-python-3.7](https://img.shields.io/badge/Made%20with-Python%203.7-1CABE2.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.2-brightgreen.svg)
 
 ## A web scraper for Tweeted news articles
 
-### USAGE
+### v1.2 Changelog
+* Updated to Python 3.7.0
+* Now uses Dataclasses
+* Now takes input data as CSV (handle, tweet)
+* Now outputs data as JSON 
 
-1. Get ChromeDriver from:
-    [http://chromedriver.chromium.org/downloads](http://chromedriver.chromium.org/downloads)
-2. Add path to driver in publication.py
-3. Install requirements with:
+### Requirements
+1. Download ChromeDriver from [http://chromedriver.chromium.org/downloads](http://chromedriver.chromium.org/downloads)
+2. Add path to driver in _scrape.py_
+3. Install requirements `pip install -r requirements.txt`
 
-    ```pip install -r requirements.txt```
-4. Edit scrape.py main with Publication instances. Example:
+### Usage
+Run program with `python3 scrape.py`
+
+### Examples
+
+Scraping image captions from WSJ and WAPO articles. 
+
+##### Define Publication instances in _scrape.py_.
     ```python
-    wsj = Publication(name='WSJ')
+    
+    tweets = read_csv('../example_data.csv')
 
-    wsj_args = [
-                    {'parent_div': 'div.wsj-article-caption',
-                     'caption_span': 'span.wsj-article-caption-content',
-                     'credit_span': 'span.wsj-article-credit'
-                     }
-                ]
+    # WALL STREET JOURNAL
+    wsj_urls = extract_tweeted_urls(tweets).loc[0:2]
 
-    wsj_inp_urls = get_workbook_urls(workbook='input_tweets.xlsx',
-                                     row_start=990,
-                                     row_end=1000
-                                     )
-
-    scrape_articles(publication=wsj,
-                    input_urls=wsj_inp_urls,
-                    kwargs_list=wsj_args,
-                    date='time.timestamp',
-                    start_index=990,
-                    )
-
-    write_output(publication=wsj,
-                 output_workbook='output_articles.xlsx'
-                 )
-    ```
-5. Run with
-    ```python
-    python3 scrape.py
-    ```
-
-    Example terminal output:
-    ```
-
-    Processing WSJ article 1 of 10...
-    {
-        [
-            caption 1: Top trade officials, after meeting above in Buenos Aires in December, will convene again in Brussels on Saturday, a European official said. From left, Robert Lighthizer of the U.S., Japan's Hiroshige Seko and the EU’s Cecilia Malmstrom.
-            credit 1: PHOTO: MARCOS BRINDICCI/REUTERS
-        ]
-    date: March 7, 2018 4:39 p.m. ET
-    num_images: 1
-    url: https://www.wsj.com/articles/u-s-japan-and-eu-trade-officials-to-meet-amid-steel-tariff-uproar-1520458765
-    index: 992
-    messages: []
+    # Captures image captions of the form
+    # PARENT_CONTAINER
+    # ↳ CAPTION
+    # ↳ CREDIT
+    wsj_kwargs = {
+        'images': [{
+            'parent_div': 'div.wsj-article-caption',
+            'capt_span': 'span.wsj-article-caption-content',
+            'cred_span': 'span.wsj-article-credit'}],
+        'date': 'time.timestamp'
     }
 
-    Processing WSJ article 2 of 10...
-    Going to twitter redirect... -> https://t.co/4ZVi4OkdBi
-    {
-        [
-            caption 1: Univision CEO Randy Falco in New York in 2017.
-            credit 1: PHOTO: EVAN VUCCI/ASSOCIATED PRESS
-        ]
-    date: Updated March 7, 2018 9:34 p.m. ET
-    num_images: 1
-    url: https://www.wsj.com/articles/univision-board-considers-replacing-ceo-randy-falco-1520467488
-    index: 991
-    messages: ['REDIRECTED']
+    wsj = Publication('WSJ', cookies={}, kwargs=wsj_kwargs)
+    wsj.articles = driver.scrape_articles(wsj, wsj_urls)
+    wsj.write('output.json')  # write output data
+    print_stats(wsj)
+
+    # WASHINGTON POST
+     wapo_urls = extract_tweeted_urls(tweets).loc[163:168]
+ 
+    # Captures image captions of the form
+    # "example caption (example credit)"
+    def wapo_delimiter(caption: str) -> List[str]:
+        splits = caption.rsplit('(', 1)
+        output_splits: List[str] = []
+        for split in splits:
+            if split != '':
+                split = split[:-1] if split[-1] == ')' else split
+            output_splits.append(split)
+        return output_splits
+
+    wapo_kwargs = {
+        'images': [{
+            'parent_div': 'span.pb-caption',
+            'delimiter': wapo_delimiter}],
+        'date': 'span.pb-timestamp'
     }
+
+    wapo = Publication('WAPO', cookies={}, kwargs=wapo_kwargs)
+    wapo.articles = driver.scrape_articles(wapo, wapo_urls)
+    wapo.write('output2.json')
     ```
 
-### NOTES & ASSUMPTIONS
-
-* This program reads data from an input Excel workbook.
-    By default the workbook is assumed to be formatted in the
-    following manner:
-
-    Index | Label | Tweet
-    ------------ | ------------- | -------------
-    990 | WSJ | Opinion: EU policy makers need to think carefully about what discretion the central bank should retain in a crisis https://t.co/nbtMGhLiNE
-    991 | WSJ | Univision board is considering replacing its CEO and exploring cost cuts to prepare for a potential sale after scra‚Ä¶ https://t.co/bRr13ptgal
-    ... | ... | ...
-
-    Automating the collection of these Tweets from publication feeds into an Excel file is a WIP.
-
-* For publications requiring a login, you will only need to log in the first time you run the program. After that your cookies will be pickled and saved locally and loaded in subsequent sessions.
-
-    There is an automated login function included within Publication.py for the WSJ. For other publications Google reCAPTCHA makes automated login difficult, but there are methods to work around it (such as bottling and loading uBlock Origin into the webdriver.)
-
-
-
-* Generally speaking, captions are formatted in 3 ways:
-    1. With the caption/credit as children of a parent container
-    and the caption/credit residing on the same depth. Example:
-
-        ```
-        PARENT_CONTAINER
-        ↳ CHILD_CAPTION
-        ↳ CHILD_CREDIT
-        ```
-
-    2. With the caption/credit formatted in a single text string.
-        Examples:
-
-        ```
-        Some example caption (Some example credit)
-        ```
-
-        ```
-        Some example caption \n Some example credit
-        ```
-
-        ```
-        Some example caption PHOTO: Some example credit
-        ```
-
-        etc.
-
-    3. With ALL caption/credit pairs residing underneath a single       parent. This is particularly common with galleries or slideshows. Example:
-        ```
-        PARENT_CONTAINER
-        ↳ CHILD_CAPTION_1
-        ↳ CHILD_CREDIT_1
-        ↳ CHILD_CAPTION_2
-        ↳ CHILD_CREDIT_2
-        ↳ CHILD_CAPTION_3
-        ↳ CHILD_CREDIT_3
-        ...
-        ```
-
-    This program can efficiently extract captions of type 1 and 2 with the right keyword arguments and delimiter function.
-
-
-
-    Extracting captions from galleries/slideshows is inconsistent depending on page structure and whether content is dynamically generated. This functionality is a WIP.
+##### Program Output
+    ```
+    Processing WSJ article 1/3...
+    Press Enter to begin after you have logged in...
+    {
+        "url": "https://www.wsj.com/articles/johnson-johnson-says-discounts-cut-the-prices-for-its-drugs-though-revenue-rose-1520551413",
+        "body": "",
+        "date": "March 8, 2018 6:23 p.m. ET",
+        "num_images": 1,
+        "images": [
+            {
+                "caption": "Joaquin Duato, who heads J&J\u2019s pharmaceuticals business, is seen at a panel discussion in Washington in September.",
+                "credit": "PHOTO: BLOOMBERG NEWS"
+            }
+        ]
+    }
+    Processing WSJ article 2/3...
+    {
+        "url": "https://www.wsj.com/articles/wynn-resorts-to-pay-universal-entertainment-to-settle-litigation-1520551385",
+        "body": "",
+        "date": "Updated March 8, 2018 10:34 p.m. ET",
+        "num_images": 2,
+        "images": [
+            {
+                "caption": "Steve Wynn, the former CEO of Wynn Resorts, show in May 2017.",
+                "credit": "PHOTO: MIKE BLAKE/REUTERS"
+            },
+            {
+                "caption": "",
+                "credit": ""
+            }
+        ]
+    }
+    
+    ...
+    
+    Processing WAPO article 3/6...
+    {
+        "url": "https://www.washingtonpost.com/news/capital-weather-gang/wp/2018/03/08/the-chance-of-a-major-winter-storm-in-washington-sunday-and-monday-has-markedly-decreased/",
+        "body": "",
+        "date": "",
+        "num_images": 5,
+        "images": [
+            {
+                "caption": "European model shows storm well southeast of Washington on Monday morning, far enough for the storm to completely miss.",
+                "credit": ""
+            },
+            {
+                "caption": "The NAM model shows precipitation from the Sunday-Monday Mid-Atlantic storm remaining south and southeast of Washington.",
+                "credit": ""
+            },
+            {
+                "caption": "American (GFS) model shows the D.C. area on the northern edge of snow from a coastal storm Monday morning. ",
+                "credit": "WeatherBell.com"
+            },
+            {
+                "caption": "Snowfall forecasts from the group of simulations in the American (GEFS) modeling system. Note that these accumulations assume 10 inches of snow would fall for every inch of rain, whereas it would, in reality, be less given the wet nature of snow that falls. ",
+                "credit": "WeatherBell.com"
+            },
+            {
+                "caption": "The UKMet forecast created Wednesday for Monday in the Mid-Atlantic showed a big storm coming up the East Coast. Thursday\u2019s forecast has a much weaker storm headed out to sea. ",
+                "credit": "Meteocentre.com"
+            }
+        ]
+    }
+    
+    ```
