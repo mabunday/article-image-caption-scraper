@@ -112,7 +112,7 @@ Scraping image captions from WSJ and WAPO articles
     {
         "url": "https://www.washingtonpost.com/news/capital-weather-gang/wp/2018/03/08/the-chance-of-a-major-winter-storm-in-washington-sunday-and-monday-has-markedly-decreased/",
         "body": "",
-        "date": "",
+        "date": "March 8",
         "num_images": 5,
         "images": [
             {
