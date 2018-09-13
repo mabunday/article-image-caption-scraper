@@ -72,7 +72,7 @@ wapo.write('output2.json')
 ```
 
 ##### Program Output
-```python
+```json
 Processing WSJ article 1/3...
 Press Enter to begin after you have logged in...
 {
