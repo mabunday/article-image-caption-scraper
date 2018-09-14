@@ -16,7 +16,7 @@
 * More analysis tools
 
 ### Requirements
-1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads)Add path to ChromeDriver in _scrape.py_
+1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _scrape.py_
 3. Install requirements `pip install -r requirements.txt`
 
 ### Usage
