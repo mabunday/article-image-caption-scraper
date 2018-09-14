@@ -3,11 +3,16 @@
 
 ## A web scraper for Tweeted news articles
 
-### v1.2 Changelog
+#### v1.2 Changelog
 * Updated to Python 3.7.0
 * Refactored to use Dataclasses and Dataframes
 * Now takes input Twitter data as CSV (handle, tweet)
 * Now outputs scraped data as JSON 
+
+#### Coming in v1.3
+* More robust logging system 
+* Automatic construction of data sets from Twitter feeds
+* More analysis tools
 
 ### Requirements
 1. Download ChromeDriver from [http://chromedriver.chromium.org/downloads](http://chromedriver.chromium.org/downloads)
