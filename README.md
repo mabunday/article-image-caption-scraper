@@ -1,7 +1,7 @@
 # twitter-news-scraper
 [![made-with-python-3.7](https://img.shields.io/badge/Made%20with-Python%203.7-1CABE2.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.2-brightgreen.svg)
 
-## A web scraper for Tweeted news articles
+## A dynamic web scraper for Tweeted news articles
 
 #### v1.2 Changelog
 * Updated to Python 3.7.0
