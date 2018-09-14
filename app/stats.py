@@ -1,6 +1,6 @@
 import pandas as pd
 
-from publication import Publication
+from .publication import Publication
 
 
 def print_stats(publication: Publication) -> None:

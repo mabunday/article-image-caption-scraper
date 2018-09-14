@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Union
 from typing import List
 
-from article import Article
+from .article import Article
 
 Kwargs = Dict[str, Union[str, List[Dict[str, str]]]]
 
@@ -24,6 +24,7 @@ class Publication:
         self.articles.append(article)
 
     def write(self, file_path: str, mode: str = 'w', indent: int = 4) -> None:
+        print('Writing data to {}'.format(file_path))
         articles = [a.asdict() for a in self.articles]
         with open(file_path, mode) as f:
             f.write(json.dumps(articles, indent=indent))

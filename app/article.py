@@ -3,7 +3,7 @@ import json
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Union
 
-from image import Image
+from .image import Image
 
 
 @dataclass(frozen=True)
