@@ -239,7 +239,8 @@ def main() -> None:
     :return:
     """
 
-    _driver_path = '/Users/mabunday/Documents/git/twitter-news-scraper/chromedriver'
+    # Fill in path here
+    _driver_path = ''
     driver = CustomDriver(_driver_path)
 
     tweets = read_csv('../example_data.csv')
