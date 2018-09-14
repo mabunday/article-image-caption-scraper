@@ -1,7 +1,8 @@
 # twitter-news-scraper
 [![made-with-python-3.7](https://img.shields.io/badge/Made%20with-Python%203.7-1CABE2.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-1.2-brightgreen.svg)
 
-## A dynamic web scraper for Tweeted news articles
+### Description 
+**twitter-news-scraper** is a dynamic web scraper for Tweeted news articles. It has been successfully used to scrape information from 20 publications and over 2,000 unique articles. 
 
 #### v1.2 Changelog
 * Updated to Python 3.7.0
@@ -11,18 +12,20 @@
 
 #### Coming in v1.3
 * More robust logging system 
-* Automatic construction of data sets from Twitter feeds
+* Automatic construction of datasets from Twitter feeds
 * More analysis tools
 
 ### Requirements
-1. Download ChromeDriver from [http://chromedriver.chromium.org/downloads](http://chromedriver.chromium.org/downloads)
-2. Add path to driver in _scrape.py_
+1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads)Add path to ChromeDriver in _scrape.py_
 3. Install requirements `pip install -r requirements.txt`
 
 ### Usage
-Run program with `python3 scrape.py`
+Run **twitter-news-scraper** with `python3 scrape.py`. Depending on the publication, you may need to log in before you begin scraping
 
-### Example
+### Included Data
+An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv` is provided. The data was collected from the [WSJ's Twitter account](https://twitter.com/WSJ) and is 140x2 with `handle` and `tweet` features. The dataset includes duplicates, invalid/null links, and a variety of article types which can all be dynamically processed by twitter-news-scraper. 
+
+### Example Usage
 
 _Scraping image captions from WSJ and WAPO articles_
 
@@ -77,5 +80,5 @@ wapo.articles = driver.scrape_articles(wapo, wapo_urls)
 wapo.write('output2.json')
 ```
 
-##### Example Output
+##### `python3 scrape.py` output
 ![carbon](carbon.png)
