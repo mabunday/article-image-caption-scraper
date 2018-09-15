@@ -26,12 +26,12 @@ An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv
 ### Usage
 Run **twitter-news-scraper** with `python3 driver.py`. Depending on the publication, you may need to log into their website before you begin scraping.
 
-You can also demo **twitter-news-scraper** by running the included _demo.ipynb_ Jupyter notebook. 
+You can also demo **twitter-news-scraper** by running the included `demo.ipynb` Jupyter notebook. 
 
 ### Example 
 _Scraping image captions from WSJ and WAPO articles_
 
-Define Publication instances in _driver.py:
+Define WSJ and WAPO Publication instances in `driver.py`:
 ```python
 tweets = read_csv('../example_data.csv')
 urls = extract_tweeted_urls(tweets)
