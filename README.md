@@ -1,4 +1,4 @@
-# twitter-article-scraper
+# twitter-news-scraper
 [![made-with-python-3.7](https://img.shields.io/badge/Made%20with-Python%203.7-1CABE2.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-0.2-brightgreen.svg)
 
 ### Description 
