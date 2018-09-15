@@ -16,6 +16,9 @@
     * More analysis tools
     * Multi-processing with Dask
 
+### Included Data
+An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv` is provided. The data was collected from the [WSJ's Twitter account](https://twitter.com/WSJ) and is 140x2 with `handle` and `tweet` features. The dataset includes duplicates, invalid/null links, and a variety of article types which can all be dynamically processed by twitter-news-scraper.
+
 ### Requirements
 1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _driver.py_
 3. Install requirements `pip install -r requirements.txt`
@@ -23,16 +26,12 @@
 ### Usage
 Run **twitter-news-scraper** with `python3 driver.py`. Depending on the publication, you may need to log into their website before you begin scraping.
 
-You can run a demo of **twitter-news-scraper** by running the included _demo.ipynb_ Jupyter notebook.
+You can also demo **twitter-news-scraper** by running the included _demo.ipynb_ Jupyter notebook. 
 
-### Included Data
-An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv` is provided. The data was collected from the [WSJ's Twitter account](https://twitter.com/WSJ) and is 140x2 with `handle` and `tweet` features. The dataset includes duplicates, invalid/null links, and a variety of article types which can all be dynamically processed by twitter-news-scraper. 
-
-### Example Usage
-
+### Example 
 _Scraping image captions from WSJ and WAPO articles_
 
-##### Define Publication instances in _driver.py_
+Define Publication instances in _driver.py:
 ```python
 tweets = read_csv('../example_data.csv')
 urls = extract_tweeted_urls(tweets)
@@ -83,5 +82,4 @@ wapo.articles = driver.scrape_articles(wapo, wapo_urls)
 wapo.write('output2.json')
 ```
 
-##### `python3 driver.py` output
-![carbon](carbon.png)
+`python3 driver.py` output: ![carbon](carbon.png)
