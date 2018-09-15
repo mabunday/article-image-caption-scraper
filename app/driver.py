@@ -11,12 +11,12 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 
-from utils import extract_tweeted_urls, get_domain, read_csv
 from article import Article
 from domain_list import VALID_DOMAINS
 from image import Image, delim_image, get_image
 from publication import Kwargs, Publication
 from stats import print_stats
+from utils import extract_tweeted_urls, get_domain, read_csv, strip_url
 
 
 class CustomDriver(webdriver.Chrome):
@@ -49,12 +49,8 @@ class CustomDriver(webdriver.Chrome):
         if article_cache is None:
             article_cache = {}
 
-        article_url = self.current_url
         # Strip unnecessary headers for memoization
-        try:
-            stripped_url = article_url[:article_url.index('?')]
-        except ValueError:
-            stripped_url = article_url
+        stripped_url = strip_url(self.current_url)
 
         # If article is cached
         if stripped_url in article_cache:
@@ -275,8 +271,8 @@ def main() -> None:
 
     wsj = Publication('WSJ', cookies={}, kwargs=wsj_kwargs)
     wsj.articles = driver.scrape_articles(wsj, wsj_urls)
-    # wsj.write('output.json')  # write output data
-    # print_stats(wsj)
+    wsj.write('output.json')  # write output data
+    print_stats(wsj)
 
     # WASHINGTON POST
     wapo_urls = urls.loc[163:168]
