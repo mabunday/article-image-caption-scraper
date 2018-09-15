@@ -178,11 +178,11 @@ class CustomDriver(webdriver.Chrome):
 
         articles = []
 
-        index = 0
-        for _, url in data.itertuples():
-            index += 1
+        article_number = 0
+        for index, url in data.itertuples():
+            article_number += 1
             self._log_messages('Processing {} article {}/{}...'.format(
-                publication.name, index, data.size))
+                publication.name, article_number, data.size))
 
             # if url is NaN
             if isinstance(url, float):
