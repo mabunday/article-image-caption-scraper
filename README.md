@@ -11,9 +11,9 @@
     * Now takes input Twitter data as CSV (handle, tweet)
     * Now outputs scraped data as JSON 
 * *Coming in v0.3*
-    * More robust logging system 
     * Automatic construction of datasets from Twitter feeds
     * More analysis tools
+    * Multi-processing with Dask
 
 ### Requirements
 1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _scrape.py_
