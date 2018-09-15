@@ -82,5 +82,5 @@ wapo.articles = driver.scrape_articles(wapo, wapo_urls)
 wapo.write('output2.json')
 ```
 
-##### `python3 scrape.py` output
+##### `python3 driver.py` output
 ![carbon](carbon.png)
