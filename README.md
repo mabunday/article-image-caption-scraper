@@ -3,7 +3,7 @@
 ![cover](carbon_cover.png)
 
 ### Description 
-**twitter-news-scraper** is an automated web scraper for dynamically scraping information from Tweeted news articles. It has been successfully used to collect image captions from 20 news publications, and over 2,000 articles for academic research. 
+**twitter-news-scraper** is an automated web scraper for Tweeted news articles. It has been successfully used in academic research and can quickly and dynamically collect information that can then be written to JSON objects.   
 
 ### Changelog
 * **New in v0.2**
