@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Union
 from typing import List
 
-from .article import Article
+from article import Article
 
 Kwargs = Dict[str, Union[str, List[Dict[str, str]]]]
 

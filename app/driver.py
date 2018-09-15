@@ -11,15 +11,15 @@ from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 
-from .__init__ import extract_tweeted_urls, get_domain, read_csv
-from .article import Article
-from .domain_list import VALID_DOMAINS
-from .image import Image, delim_image, get_image
-from .publication import Kwargs, Publication
-from .stats import print_stats
+from utils import extract_tweeted_urls, get_domain, read_csv
+from article import Article
+from domain_list import VALID_DOMAINS
+from image import Image, delim_image, get_image
+from publication import Kwargs, Publication
+from stats import print_stats
 
 
-class Driver(webdriver.Chrome):
+class CustomDriver(webdriver.Chrome):
     """Driver class. Extends webdriver.Chrome."""
 
     def __init__(self, driver_path: str,
@@ -251,8 +251,9 @@ def main() -> None:
     """
 
     # Fill in path here
+    print('PATH TO CHROMEDRIVER NEEDS BE ADDED IN MAIN METHOD')
     _driver_path = ''
-    driver = Driver(_driver_path)
+    driver = CustomDriver(_driver_path)
 
     tweets = read_csv('../example_data.csv')
     urls = extract_tweeted_urls(tweets)
@@ -274,8 +275,8 @@ def main() -> None:
 
     wsj = Publication('WSJ', cookies={}, kwargs=wsj_kwargs)
     wsj.articles = driver.scrape_articles(wsj, wsj_urls)
-    wsj.write('output.json')  # write output data
-    print_stats(wsj)
+    # wsj.write('output.json')  # write output data
+    # print_stats(wsj)
 
     # WASHINGTON POST
     wapo_urls = urls.loc[163:168]
