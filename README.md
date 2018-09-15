@@ -2,7 +2,7 @@
 [![made-with-python-3.7](https://img.shields.io/badge/Made%20with-Python%203.7-1CABE2.svg)](https://www.python.org/) ![version](https://img.shields.io/badge/version-0.2-brightgreen.svg)
 
 ### Description 
-**twitter-article-scraper** is an automated web scraper for scraping Tweeted articles. It has been successfully used to collect image captions from 20 news publications, and over 2,000 articles for academic research. 
+**twitter-news-scraper** is an automated web scraper for dynamically scraping information from Tweeted news articles. It has been successfully used to collect image captions from 20 news publications, and over 2,000 articles for academic research. 
 
 ### Changelog
 * **New in v0.2**
@@ -16,11 +16,13 @@
     * Multi-processing with Dask
 
 ### Requirements
-1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _scrape.py_
+1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _driver.py_
 3. Install requirements `pip install -r requirements.txt`
 
 ### Usage
-Run **twitter-article-scraper** with `python3 scrape.py`. Depending on the publication, you may need to log into their website before you begin scraping.
+Run **twitter-news-scraper** with `python3 driver.py`. Depending on the publication, you may need to log into their website before you begin scraping.
+
+You can run a demo of **twitter-news-scraper** by running the included _demo.ipynb_ Jupyter notebook.
 
 ### Included Data
 An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv` is provided. The data was collected from the [WSJ's Twitter account](https://twitter.com/WSJ) and is 140x2 with `handle` and `tweet` features. The dataset includes duplicates, invalid/null links, and a variety of article types which can all be dynamically processed by twitter-news-scraper. 
@@ -29,7 +31,7 @@ An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv
 
 _Scraping image captions from WSJ and WAPO articles_
 
-##### Define Publication instances in _scrape.py_
+##### Define Publication instances in _driver.py_
 ```python
 tweets = read_csv('../example_data.csv')
 urls = extract_tweeted_urls(tweets)
@@ -44,8 +46,8 @@ wsj_urls = urls.loc[0:2]
 wsj_kwargs = {
     'images': [{
         'parent_div': 'div.wsj-article-caption',
-        'capt_span': 'span.wsj-article-caption-content',
-        'cred_span': 'span.wsj-article-credit'}],
+        'caption_span': 'span.wsj-article-caption-content',
+        'credit_span': 'span.wsj-article-credit'}],
     'date': 'time.timestamp'
 }
 
