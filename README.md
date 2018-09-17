@@ -3,7 +3,7 @@
 ![cover](carbon_cover.png)
 
 ### Description 
-**twitter-news-scraper** is an automated web scraper for Tweeted news articles. It has been successfully used in academic research and can quickly and dynamically collect information that can then be written to JSON objects.   
+**twitter-news-scraper** is an automated web scraper for Tweeted news articles. It can dynamically collect article information that can then be written to JSON objects and it has been successfully used in academic research.
 
 ### Changelog
 * **New in v0.2**
@@ -20,7 +20,8 @@
 An example [Wall Street Journal](https://www.wsj.com/) dataset `example_data.csv` is provided. The data was collected from the [WSJ's Twitter account](https://twitter.com/WSJ) and is 140x2 with `handle` and `tweet` features. The dataset includes duplicates, invalid/null links, and a variety of article types which can all be dynamically processed by twitter-news-scraper.
 
 ### Requirements
-1. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _driver.py_
+1. [Python 3.7.0](https://www.python.org/downloads/release/python-370/)
+2. Download [ChromeDriver](http://chromedriver.chromium.org/downloads) and add path to it in _driver.py_
 3. Install requirements `pip install -r requirements.txt`
 
 ### Usage
